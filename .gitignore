@@ -103,7 +103,7 @@ cython_debug/
 .idea/
 
 # Visual Studio Code
- .vscode/
+.vscode/
 
 # Ruff stuff:
 .ruff_cache/
@@ -122,3 +122,8 @@ large_dataset/results1/logs
 coaster_label/config/output
 large_dataset/results1/cldk_analysis
 .codex
+
+datasets/validation/*
+datasets/full/*
+datasets/validation.zip
+datasets/full.zip
