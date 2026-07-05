@@ -1,4 +1,4 @@
-
+# Atlas: LLM-based Analyzer for State Independence Patterns in Web API Applications
 
 ## Installation
 
@@ -36,33 +36,30 @@ Optional overrides:
 
 ---
 
+## Datasets
 
-## Library usage (Python)
+Our datasets (the full dataset, the validation dataset, and the agent-generated tests for applications in the full dataset) are published on [Zenodo](https://doi.org/10.5281/zenodo.21185073).
 
-```python
-from pydantic import BaseModel, Field
-from angelica.agents.system import AgenticLabelingSystem
-from angelica.models.config import AgenticConfig, PromptSpec, StoreSpec
-from angelica.storage.sqlite.store_sqlite import SQLiteStore
-from angelica.storage.faiss.vector_faiss import FaissVectorIndex
+Please download `full.zip`, `validation.zip` and `agent-generated.zip` to `./datasets`. Run `datasets/unzip_datasets.sh` to unzip them.
 
-class MyLabel(BaseModel):
-    label: str
-    reasoning: str
-    confidence_score: float
-
-cfg = AgenticConfig(
-    schema=MyLabel,
-    patterns="...",
-    angelica_a_prompt=PromptSpec("...", "..."),
-    angelica_b_prompt=PromptSpec("...", "..."),
-    adjudicator_prompt=PromptSpec("...", "..."),
-)
-
-store = SQLiteStore("labels.db", schema=MyLabel, store_spec=cfg.store_spec)
-index = FaissVectorIndex("vector_index")
-
-system = AgenticLabelingSystem(store=store, index=index, config=cfg)
+```bash
+bash ./datasets/unzip_datasets.sh
 ```
 
----
+## Running Atlas on an application
+
+With the virtual environment activated, using the following command to run Atlas on a web API application.
+
+```bash
+angelica label-units \
+  --config ./coaster_label/config/coaster_config.py \
+  --project-path "root directory of the application, e.g., datasets/validation/catwatch" \
+  --analysis-provider ./coaster_label/config/cldk_analysis_provider.py \
+  --db labels.db \
+  --index-dir vector_index \
+  --clear-cache \
+  --analysis-timeout 600 \
+  --out results.json
+```
+
+Use `angelica label-units --help` to go through all the options.

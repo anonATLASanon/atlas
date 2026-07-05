@@ -127,3 +127,5 @@ datasets/validation/*
 datasets/full/*
 datasets/validation.zip
 datasets/full.zip
+datasets/agent-generated/*
+datasets/agent-generated.zip
