@@ -46,7 +46,11 @@ Please download `full.zip`, `validation.zip` and `agent-generated.zip` to `./dat
 bash ./datasets/unzip_datasets.sh
 ```
 
-## Running Atlas on an application
+Under `datasets/agent-prompts` are the prompts we used to generate tests for applications using Claude Code.
+
+## Running Atlas
+
+### Running one application
 
 With the virtual environment activated, using the following command to run Atlas on a web API application.
 
@@ -63,6 +67,28 @@ angelica label-units \
 ```
 
 Use `angelica label-units --help` to go through all the options.
+
+### Running on the validation dataset
+
+The following command will run Atlas on each application in the validation dataset (`datasets/validation`), and the outputs will be saved in `results/atlas_validation_runs/<app_name>/`.
+```bash
+bash scripts/run_atlas_validation.sh
+```
+
+### Running on the full dataset
+
+```bash
+bash scripts/run_atlas_full.sh
+```
+The outputs go under `results/atlas_full_runs/<app_name>/`.
+
+
+### Running on the agent-generated tests
+
+```bash
+bash scripts/run_atlas_agent_generated.sh
+```
+The outputs go under `results/atlas_agent_generated_runs/<app_name>/`.
 
 ## Empirical results
 
