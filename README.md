@@ -13,7 +13,6 @@ source .venv/bin/activate
 pip install -e .
 ```
 
----
 
 ## Environment variables
 
@@ -34,7 +33,8 @@ Optional overrides:
 - EMBEDDINGS_MODEL – default: text-embedding-3-small
 - LABELER_A_MODEL, LABELER_A_MODEL, ADJUDICATOR_MODEL
 
----
+In our experiments, we used OpenRouter as the API provider.
+
 
 ## Datasets
 
@@ -115,5 +115,14 @@ python ./results/scripts/RQ3/patterns_alluvial.py --min-percent 1.0
 
 To generate the alluvial graphs for patterns used in the full dataset (Figure 8), run the following script. The figures will be saved to `results/RQ3/full_dataset_alluvial`.
 ```bash
-python ./results/scripts/RQ3/analyze_json_patterns_alluvial.py --min-percent 1
+python ./results/scripts/RQ3/analyze_json_patterns_alluvial.py  --labels-dir results/labels_full_dataset --output-dir results/RQ3/full_dataset_alluvial --location-min-percent 1 --mechanism-min-percent 1
+```
+
+### RQ4
+
+The labeling results on the agent-generated tests are placed in `results/agent_labels`. Note that we have results for 44 out of the 50 applications because the agent did not generate any API-level integration tests for the remaining 6 applications.
+
+To generate the alluvial graphs for patterns used in the agent-generated tests (Figure 9), run the following command. The figures will be saved to `results/RQ4`.
+```bash
+python ./results/scripts/RQ3/analyze_json_patterns_alluvial.py --labels-dir results/agent_labels --output-dir results/RQ4/
 ```

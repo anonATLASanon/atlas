@@ -116,10 +116,16 @@ def parse_args() -> argparse.Namespace:
         help="Include blank/unlabeled values as a '(blank)' category.",
     )
     parser.add_argument(
-        "--min-percent",
+        "--location-min-percent",
         type=float,
-        default=3.0,
-        help="Group side categories below this percentage into Other (default: 3.0).",
+        default=0.0,
+        help="Group location side categories below this percentage into Other (default: 0.0).",
+    )
+    parser.add_argument(
+        "--mechanism-min-percent",
+        type=float,
+        default=1.0,
+        help="Group mechanism side categories below this percentage into Other (default: 1.0).",
     )
     return parser.parse_args()
 
@@ -139,17 +145,22 @@ def main() -> None:
 
     generated = []
     csv_rows: list[dict[str, object]] = []
+    min_percent_by_group = {
+        "location": args.location_min_percent,
+        "mechanism": args.mechanism_min_percent,
+    }
     for group_name, pairs in pairs_by_group.items():
+        min_percent = min_percent_by_group[group_name]
         generated.append(
             plot_alluvial(
                 pairs,
                 group_name=group_name,
                 output_dir=args.output_dir,
-                min_percent=args.min_percent,
+                min_percent=min_percent,
             )
         )
 
-        remapped = remap_small_categories(pairs, min_percent=args.min_percent)
+        remapped = remap_small_categories(pairs, min_percent=min_percent)
         for (load_category, cleanup_category), count in remapped.most_common():
             csv_rows.append(
                 {
