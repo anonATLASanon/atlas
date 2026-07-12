@@ -102,3 +102,18 @@ To calculate the labeling accuracy on the validation dataset (Table IV in the pa
 ```bash
 python ./results/scripts/analyze_validation_label_accuracy.py
 ```
+
+To generate the heatmap for patterns used in the validation dataset (Figure 5 and 6), run the following script. The figures will be saved to `/home/rkh/26summer/atlas_artifact/results/RQ3/heatmaps`.
+```bash
+python results/scripts/RQ3/patterns_heatmap_location_side_by_side.py
+```
+
+To generate the alluvial graphs for patterns used in the validation dataset (Figure 7), run the following script. The figures will be saved to `results/RQ3/alluvial`.
+```bash
+python ./results/scripts/RQ3/patterns_alluvial.py --min-percent 1.0
+```
+
+To generate the alluvial graphs for patterns used in the full dataset (Figure 8), run the following script. The figures will be saved to `results/RQ3/full_dataset_alluvial`.
+```bash
+python ./results/scripts/RQ3/analyze_json_patterns_alluvial.py --min-percent 1
+```
