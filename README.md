@@ -84,7 +84,17 @@ python ./results/scripts/count_full_dataset_integration_tests.py
 
 ### RQ2
 
+To find the cases of state independence in the validation dataset (12 tests as in Section V), run the following script.
+```bash
+python results/scripts/find_validation_required_but_not_present.py
+```
+The found cases and a summary are saved in `results/required_but_not_present`.
 
+To find the cases of state independence in the full dataset (14 tests as in Section V), run the following script.
+```bash
+python results/scripts/results/scripts/find_full_dataset_required_but_not_present.py
+```
+The found cases and a summary are saved in `results/required_but_not_present_full_dataset`.
 
 ### RQ3
 

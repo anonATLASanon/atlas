@@ -1,0 +1,13 @@
+application,test_id,kind,is_integration_test,required,location,mechanism,missing
+petclinic,org.springframework.samples.petclinic.service.ClinicServiceTests#shouldAddNewVisitForPet(),data_load,true,1,not_present,not_present,location and mechanism
+petclinic,org.springframework.samples.petclinic.service.ClinicServiceTests#shouldFindOwnersByLastName(),data_load,true,1,not_present,not_present,location and mechanism
+petclinic,org.springframework.samples.petclinic.service.ClinicServiceTests#shouldFindSingleOwnerWithPet(),data_load,true,1,not_present,not_present,location and mechanism
+petclinic,org.springframework.samples.petclinic.service.ClinicServiceTests#shouldFindVets(),data_load,true,1,not_present,not_present,location and mechanism
+petclinic,org.springframework.samples.petclinic.service.ClinicServiceTests#shouldFindVisitsByPetId(),data_load,true,1,not_present,not_present,location and mechanism
+petclinic,org.springframework.samples.petclinic.service.ClinicServiceTests#shouldInsertPetIntoDatabaseAndGenerateId(),data_load,true,1,not_present,not_present,location and mechanism
+petclinic,org.springframework.samples.petclinic.service.ClinicServiceTests#shouldUpdateOwner(),data_load,true,1,not_present,not_present,location and mechanism
+petclinic,org.springframework.samples.petclinic.service.ClinicServiceTests#shouldUpdatePetName(),data_load,true,1,not_present,not_present,location and mechanism
+shopizer,com.salesmanager.test.shop.integration.cart.ShoppingCartAPIIntegrationTest#deleteCartItem(),data_load,true,1,not_present,not_present,location and mechanism
+shopizer,com.salesmanager.test.shop.integration.cart.ShoppingCartAPIIntegrationTest#deleteCartItemWithBody(),data_load,true,1,not_present,not_present,location and mechanism
+shopizer,com.salesmanager.test.shop.integration.cart.ShoppingCartAPIIntegrationTest#updateMultiWCartId(),data_load,true,1,not_present,not_present,location and mechanism
+shopizer,com.salesmanager.test.shop.integration.cart.ShoppingCartAPIIntegrationTest#updateMultiWZeroOnOneProd(),data_load,true,1,not_present,not_present,location and mechanism

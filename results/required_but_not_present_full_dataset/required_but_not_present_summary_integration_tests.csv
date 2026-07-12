@@ -1,0 +1,10 @@
+project,kind,missing,count
+Baeldung_spring-security-registration,data_cleanup,location and mechanism,1
+alibaba_COLA,data_cleanup,location and mechanism,1
+apache_usergrid,data_cleanup,location and mechanism,3
+ballcat-projects_ballcat,data_cleanup,location and mechanism,1
+ballcat-projects_ballcat,data_load,location and mechanism,1
+eventuate-tram_eventuate-tram-examples-customers-and-orders,data_cleanup,location and mechanism,1
+funtl_MyShopPlus,data_load,location and mechanism,1
+hs-web_hsweb-framework,data_cleanup,location and mechanism,2
+spring-projects-experimental_spring-boot-thin-launcher,data_load,location and mechanism,3

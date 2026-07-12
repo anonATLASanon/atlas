@@ -1,0 +1,15 @@
+project,test_id,kind,is_integration_test,required,location,mechanism,missing
+alibaba_COLA,com.huawei.charging.infrastructure.ChargeRecordRepoTest#testSave(),data_cleanup,true,True,not_present,not_present,location and mechanism
+apache_usergrid,org.apache.usergrid.security.ApigeeSSO2ProviderIT#testBasicOperation(),data_cleanup,true,True,not_present,not_present,location and mechanism
+apache_usergrid,org.apache.usergrid.security.ApigeeSSO2ProviderIT#testExpiredToken(),data_cleanup,true,True,not_present,not_present,location and mechanism
+apache_usergrid,org.apache.usergrid.security.ApigeeSSO2ProviderIT#testBadSignature(),data_cleanup,true,True,not_present,not_present,location and mechanism
+Baeldung_spring-security-registration,com.baeldung.test.UserServiceIntegrationTest#givenUserRegistered_whenCreateToken_thenCorrect(),data_cleanup,true,True,not_present,not_present,location and mechanism
+ballcat-projects_ballcat,org.ballcat.fieldcrypt.mybatisplus.MybatisPlusEncryptWeaveTest.UpdateSetVariants#lambdaUpdateWrapperSetLambda(),data_cleanup,true,True,not_present,not_present,location and mechanism
+ballcat-projects_ballcat,org.ballcat.oss.MinioOssTemplateTest#listObjects(),data_load,true,True,not_present,not_present,location and mechanism
+eventuate-tram_eventuate-tram-examples-customers-and-orders,net.chrisrichardson.eventstore.examples.customersandorders.views.orderhistory.OrderHistoryViewServiceIntegrationTest#shouldCreateCustomerAndOrdersEtc(),data_cleanup,true,True,not_present,not_present,location and mechanism
+funtl_MyShopPlus,com.funtl.myshop.plus.provider.tests.UmsAdminTests#testUpdate(),data_load,true,True,not_present,not_present,location and mechanism
+hs-web_hsweb-framework,org.hswebframework.web.dictionary.service.DefaultDictionaryItemServiceTest#testErrorOrdinal(),data_cleanup,true,True,not_present,not_present,location and mechanism
+hs-web_hsweb-framework,org.hswebframework.web.crud.service.ReactiveTreeSortEntityServiceTest#testChild(),data_cleanup,true,True,not_present,not_present,location and mechanism
+spring-projects-experimental_spring-boot-thin-launcher,org.springframework.samples.petclinic.service.ClinicServiceTests#shouldUpdateOwner(),data_load,true,True,not_present,not_present,location and mechanism
+spring-projects-experimental_spring-boot-thin-launcher,org.springframework.samples.petclinic.service.ClinicServiceTests#shouldFindVisitsByPetId(),data_load,true,True,not_present,not_present,location and mechanism
+spring-projects-experimental_spring-boot-thin-launcher,org.springframework.samples.petclinic.service.ClinicServiceTests#shouldFindSingleOwnerWithPet(),data_load,true,True,not_present,not_present,location and mechanism
