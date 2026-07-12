@@ -63,3 +63,32 @@ angelica label-units \
 ```
 
 Use `angelica label-units --help` to go through all the options.
+
+## Empirical results
+
+The empirical results are placed under directory `results`. The labeling results on the validation dataset are placed under `results/labels_validation_dataset`, and the labeling results on the full dataset are placed under `results/labels_validation_dataset`.
+
+The spreadsheet `results/validation_dataset.xlsx` contains the verified results on the validation dataset. 
+
+### RQ1
+
+To calculate the prevalence of API integration tests in the validation dataset (Table II in the paper), run the following script.
+```bash
+python ./results/scripts/count_validation_integration_tests.py
+```
+
+To calculate the prevalence of API integration tests in the full dataset (Table III in the paper), run the following script.
+```bash
+python ./results/scripts/count_full_dataset_integration_tests.py
+```
+
+### RQ2
+
+
+
+### RQ3
+
+To calculate the labeling accuracy on the validation dataset (Table IV in the paper), run the following script. The results will be printed to stdout.
+```bash
+python ./results/scripts/analyze_validation_label_accuracy.py
+```
