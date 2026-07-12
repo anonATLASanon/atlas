@@ -20,17 +20,15 @@ for project_path in "$agent_generated_dir"/*; do
   [[ -d "$project_path" ]] || continue
 
   app_name="$(basename "$project_path")"
-  app_output_dir="$output_dir/$app_name"
-  mkdir -p "$app_output_dir"
 
   echo "Running Atlas on $app_name"
   angelica label-units \
     --config "$config_path" \
     --project-path "$project_path" \
     --analysis-provider "$analysis_provider" \
-    --db "$app_output_dir/labels.db" \
-    --index-dir "$app_output_dir/vector_index" \
+    --db "$output_dir/$app_name.labels.db" \
+    --index-dir "$output_dir/$app_name.vector_index" \
     --clear-cache \
     --analysis-timeout "$analysis_timeout" \
-    --out "$app_output_dir/results.json"
+    --out "$output_dir/$app_name.json"
 done

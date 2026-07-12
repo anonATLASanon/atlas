@@ -66,11 +66,16 @@ angelica label-units \
   --out results.json
 ```
 
+For example, to run Atlas on `catwatch`:
+```bash
+angelica label-units --config ./coaster_label/config/coaster_config.py --project-path datasets/validation/catwatch --analysis-provider ./coaster_label/config/cldk_analysis_provider.py --db labels.db --index-dir vector_index --clear-cache --analysis-timeout 600 --out results/atlas_validation_runs/catwatch.json
+```
+
 Use `angelica label-units --help` to go through all the options.
 
 ### Running on the validation dataset
 
-The following command will run Atlas on each application in the validation dataset (`datasets/validation`), and the outputs will be saved in `results/atlas_validation_runs/<app_name>/`.
+The following command will run Atlas on each application in the validation dataset (`datasets/validation`), and the outputs will be saved at `results/atlas_validation_runs/<app_name>.json`.
 ```bash
 bash scripts/run_atlas_validation.sh
 ```
@@ -80,7 +85,7 @@ bash scripts/run_atlas_validation.sh
 ```bash
 bash scripts/run_atlas_full.sh
 ```
-The outputs go under `results/atlas_full_runs/<app_name>/`.
+The outputs go under `results/atlas_full_runs/<app_name>.json`.
 
 
 ### Running on the agent-generated tests
@@ -88,7 +93,7 @@ The outputs go under `results/atlas_full_runs/<app_name>/`.
 ```bash
 bash scripts/run_atlas_agent_generated.sh
 ```
-The outputs go under `results/atlas_agent_generated_runs/<app_name>/`.
+The outputs go under `results/atlas_agent_generated_runs/<app_name>.json`.
 
 ## Empirical results
 
