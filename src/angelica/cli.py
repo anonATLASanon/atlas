@@ -499,8 +499,8 @@ def extract_patterns(
     
     Example:
         angelica extract-patterns \\
-            --config coaster_label/config/coaster_config.py \\
-            --json-dir coaster_label/config/output \\
+            --config src/coaster_label/config/coaster_config.py \\
+            --json-dir src/coaster_label/config/output \\
             --field data_load_mechanism \\
             --value does_not_fit_with_any_pattern \\
             --reasoning-field data_load_mechanism_reasoning \\

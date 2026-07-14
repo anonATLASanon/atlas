@@ -56,9 +56,9 @@ With the virtual environment activated, using the following command to run Atlas
 
 ```bash
 angelica label-units \
-  --config ./coaster_label/config/coaster_config.py \
+  --config ./src/coaster_label/config/coaster_config.py \
   --project-path "root directory of the application, e.g., datasets/validation/catwatch" \
-  --analysis-provider ./coaster_label/config/cldk_analysis_provider.py \
+  --analysis-provider ./src/coaster_label/config/cldk_analysis_provider.py \
   --db labels.db \
   --index-dir vector_index \
   --clear-cache \
@@ -68,7 +68,7 @@ angelica label-units \
 
 For example, to run Atlas on `catwatch`:
 ```bash
-angelica label-units --config ./coaster_label/config/coaster_config.py --project-path datasets/validation/catwatch --analysis-provider ./coaster_label/config/cldk_analysis_provider.py --db labels.db --index-dir vector_index --clear-cache --analysis-timeout 600 --out results/atlas_validation_runs/catwatch.json
+angelica label-units --config ./src/coaster_label/config/coaster_config.py --project-path datasets/validation/catwatch --analysis-provider ./src/coaster_label/config/cldk_analysis_provider.py --db labels.db --index-dir vector_index --clear-cache --analysis-timeout 600 --out results/atlas_validation_runs/catwatch.json
 ```
 
 Use `angelica label-units --help` to go through all the options.

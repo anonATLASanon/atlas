@@ -5,8 +5,8 @@ repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 full_dir="${FULL_DIR:-$repo_root/datasets/full}"
 output_dir="${OUTPUT_DIR:-$repo_root/results/atlas_full_runs}"
 
-config_path="$repo_root/coaster_label/config/coaster_config.py"
-analysis_provider="$repo_root/coaster_label/config/cldk_analysis_provider.py"
+config_path="$repo_root/src/coaster_label/config/coaster_config.py"
+analysis_provider="$repo_root/src/coaster_label/config/cldk_analysis_provider.py"
 analysis_timeout="${ANALYSIS_TIMEOUT:-600}"
 
 if [[ ! -d "$full_dir" ]]; then
