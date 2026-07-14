@@ -1,4 +1,4 @@
-"""Ray-based parallel processing for Angelica labeling system.
+"""Ray-based parallel processing for Atlas labeling system.
 
 This module provides parallel processing capabilities using Ray for distributed
 document labeling. It includes:
@@ -9,7 +9,7 @@ document labeling. It includes:
 - RateLimiter: Token bucket rate limiter for API calls
 
 Usage:
-    from angelica.parallel import RayLabelingOrchestrator
+    from atlas.parallel import RayLabelingOrchestrator
     
     orchestrator = RayLabelingOrchestrator(
         store=store,
@@ -22,10 +22,10 @@ Usage:
     results = orchestrator.label_documents_parallel(documents)
 """
 
-from angelica.parallel.rate_limiter import RateLimiter
-from angelica.parallel.ray_storage import RayStorageActor
-from angelica.parallel.ray_worker import RayLabelingWorker
-from angelica.parallel.ray_orchestrator import RayLabelingOrchestrator
+from atlas.parallel.rate_limiter import RateLimiter
+from atlas.parallel.ray_storage import RayStorageActor
+from atlas.parallel.ray_worker import RayLabelingWorker
+from atlas.parallel.ray_orchestrator import RayLabelingOrchestrator
 
 __all__ = [
     "RateLimiter",

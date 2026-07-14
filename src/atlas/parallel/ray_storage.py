@@ -13,14 +13,14 @@ try:
 except ImportError:
     raise ImportError(
         "Ray is required for parallel processing. "
-        "Install it with: pip install 'angelica[parallel]' or pip install ray"
+        "Install it with: pip install 'atlas[parallel]' or pip install ray"
     )
 
 from pydantic import BaseModel
 
-from angelica.storage.sqlite.store_sqlite import SQLiteStore
-from angelica.storage.faiss.vector_faiss import FaissVectorIndex
-from angelica.storage.faiss.noop_index import NoOpVectorIndex
+from atlas.storage.sqlite.store_sqlite import SQLiteStore
+from atlas.storage.faiss.vector_faiss import FaissVectorIndex
+from atlas.storage.faiss.noop_index import NoOpVectorIndex
 
 
 @ray.remote
@@ -57,7 +57,7 @@ class RayStorageActor:
         enable_rag: bool = True,
     ):
         """Initialize the storage actor."""
-        from angelica.models.config import StoreSpec
+        from atlas.models.config import StoreSpec
         
         self.store = SQLiteStore(
             db_path=db_path,

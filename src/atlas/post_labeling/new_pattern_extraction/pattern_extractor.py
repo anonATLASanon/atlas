@@ -19,7 +19,7 @@ except ImportError:
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
 
-from angelica.llm_client.llm import make_structured_llm
+from atlas.llm_client.llm import make_structured_llm
 
 
 class ExampleReference(BaseModel):

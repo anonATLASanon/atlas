@@ -39,14 +39,14 @@ import typer
 from dotenv import load_dotenv
 from tqdm import tqdm
 
-from angelica.agents.system import AgenticLabelingSystem
-from angelica.metrics.metrics import plot_kappa, rolling_kappa_for_fields
-from angelica.models.config import LabelingContext
-from angelica.storage.faiss.vector_faiss import FaissVectorIndex
-from angelica.storage.faiss.enhanced_vector_faiss import EnhancedFaissVectorIndex
-from angelica.storage.sqlite.store_sqlite import SQLiteStore
-from angelica.llm_client.llm import reset_llm_cache
-from angelica.llm_client.token_counter import get_token_counter
+from atlas.agents.system import AgenticLabelingSystem
+from atlas.metrics.metrics import plot_kappa, rolling_kappa_for_fields
+from atlas.models.config import LabelingContext
+from atlas.storage.faiss.vector_faiss import FaissVectorIndex
+from atlas.storage.faiss.enhanced_vector_faiss import EnhancedFaissVectorIndex
+from atlas.storage.sqlite.store_sqlite import SQLiteStore
+from atlas.llm_client.llm import reset_llm_cache
+from atlas.llm_client.token_counter import get_token_counter
 
 
 def iter_files(path: Path, suffix: str) -> Iterator[Path]:
@@ -187,7 +187,7 @@ def label_dir(
     
     # Parallel mode
     if parallel:
-        from angelica.parallel import RayLabelingOrchestrator
+        from atlas.parallel import RayLabelingOrchestrator
         
         typer.echo(f"Using parallel mode with {num_workers} workers")
         
@@ -334,7 +334,7 @@ def label_units(
     
     # Parallel mode
     if parallel:
-        from angelica.parallel import RayLabelingOrchestrator
+        from atlas.parallel import RayLabelingOrchestrator
         
         typer.echo(f"Using parallel mode with {num_workers} workers")
         
@@ -498,7 +498,7 @@ def extract_patterns(
     }
     
     Example:
-        angelica extract-patterns \\
+        atlas extract-patterns \\
             --config src/coaster_label/config/coaster_config.py \\
             --json-dir src/coaster_label/config/output \\
             --field data_load_mechanism \\
@@ -509,7 +509,7 @@ def extract_patterns(
     """
     # Import using importlib since directory has hyphen
     import importlib
-    pattern_module = importlib.import_module("angelica.post_labeling.new_pattern_extraction")
+    pattern_module = importlib.import_module("atlas.post_labeling.new_pattern_extraction")
     PatternExtractor = pattern_module.PatternExtractor
     
     temp = ctx.obj["temp"]

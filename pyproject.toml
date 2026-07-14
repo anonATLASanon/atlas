@@ -1,5 +1,5 @@
 [project]
-name = "angelica"
+name = "atlas"
 version = "0.0.1"
 description = "Agentic Labeling"
 authors = []
@@ -134,13 +134,13 @@ dependencies = [
 ]
 
 [project.scripts]
-angelica = "angelica.cli:app"
+atlas = "atlas.cli:app"
 
 [tool.hatch.metadata]
 allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/angelica", "src/coaster_label"]
+packages = ["src/atlas", "src/coaster_label"]
 
 [build-system]
 requires = ["hatchling==1.27.0"]

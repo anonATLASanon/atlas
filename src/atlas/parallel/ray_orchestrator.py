@@ -16,17 +16,17 @@ try:
 except ImportError:
     raise ImportError(
         "Ray is required for parallel processing. "
-        "Install it with: pip install 'angelica[parallel]' or pip install ray"
+        "Install it with: pip install 'atlas[parallel]' or pip install ray"
     )
 
 from pydantic import BaseModel
 from tqdm import tqdm
 
-from angelica.llm_client.token_counter import TokenUsage
-from angelica.models.config import AgenticConfig, LabelingContext, LabelingUnit, BuiltDocument
-from angelica.parallel.rate_limiter import RateLimiter
-from angelica.parallel.ray_storage import RayStorageActor
-from angelica.parallel.ray_worker import RayLabelingWorker
+from atlas.llm_client.token_counter import TokenUsage
+from atlas.models.config import AgenticConfig, LabelingContext, LabelingUnit, BuiltDocument
+from atlas.parallel.rate_limiter import RateLimiter
+from atlas.parallel.ray_storage import RayStorageActor
+from atlas.parallel.ray_worker import RayLabelingWorker
 
 logger = logging.getLogger(__name__)
 

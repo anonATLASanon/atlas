@@ -1,12 +1,12 @@
 """FAISS-based vector storage with enhanced matching and pattern learning."""
 
-from angelica.storage.faiss.vector_faiss import FaissVectorIndex
-from angelica.storage.faiss.enhanced_vector_faiss import (
+from atlas.storage.faiss.vector_faiss import FaissVectorIndex
+from atlas.storage.faiss.enhanced_vector_faiss import (
     EnhancedFaissVectorIndex,
     MatchResult,
     Pattern,
 )
-from angelica.storage.faiss.noop_index import NoOpVectorIndex
+from atlas.storage.faiss.noop_index import NoOpVectorIndex
 
 __all__ = [
     "FaissVectorIndex",

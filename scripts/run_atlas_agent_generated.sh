@@ -22,7 +22,7 @@ for project_path in "$agent_generated_dir"/*; do
   app_name="$(basename "$project_path")"
 
   echo "Running Atlas on $app_name"
-  angelica label-units \
+  atlas label-units \
     --config "$config_path" \
     --project-path "$project_path" \
     --analysis-provider "$analysis_provider" \

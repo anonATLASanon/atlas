@@ -15,18 +15,18 @@ try:
 except ImportError:
     raise ImportError(
         "Ray is required for parallel processing. "
-        "Install it with: pip install 'angelica[parallel]' or pip install ray"
+        "Install it with: pip install 'atlas[parallel]' or pip install ray"
     )
 
 from pydantic import BaseModel
 
-from angelica.agents.agents import LabelerAgent, AdjudicatorAgent
-from angelica.llm_client.token_counter import get_token_counter
-from angelica.models.config import AgenticConfig, LabelingContext
-from angelica.prompts.prompts import default_examples_formatter
-from angelica.storage.faiss.vector_faiss import FaissVectorIndex
-from angelica.storage.faiss.noop_index import NoOpVectorIndex
-from angelica.storage.sqlite.store_sqlite import SQLiteStore
+from atlas.agents.agents import LabelerAgent, AdjudicatorAgent
+from atlas.llm_client.token_counter import get_token_counter
+from atlas.models.config import AgenticConfig, LabelingContext
+from atlas.prompts.prompts import default_examples_formatter
+from atlas.storage.faiss.vector_faiss import FaissVectorIndex
+from atlas.storage.faiss.noop_index import NoOpVectorIndex
+from atlas.storage.sqlite.store_sqlite import SQLiteStore
 
 logger = logging.getLogger(__name__)
 

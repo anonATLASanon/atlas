@@ -12,7 +12,7 @@ from typing import Any, Dict, List, Optional
 from langchain_community.vectorstores import FAISS
 from langchain_core.documents import Document
 
-from angelica.llm_client.llm import make_embeddings
+from atlas.llm_client.llm import make_embeddings
 
 
 class FaissVectorIndex:

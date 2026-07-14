@@ -20,7 +20,7 @@ from typing import Any, Dict, Optional, Sequence, Type
 import pandas as pd
 from pydantic import BaseModel
 
-from angelica.models.config import StoreSpec
+from atlas.models.config import StoreSpec
 
 
 def _now_iso() -> str:

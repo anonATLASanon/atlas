@@ -30,12 +30,12 @@ from typing import Optional, Union
 
 from pydantic import BaseModel
 
-from angelica.agents.agents import LabelerAgent, AdjudicatorAgent
-from angelica.models.config import AgenticConfig, LabelingContext, BuiltDocument, LabelingUnit
-from angelica.prompts.prompts import default_examples_formatter
-from angelica.storage.faiss.vector_faiss import FaissVectorIndex
-from angelica.storage.faiss.noop_index import NoOpVectorIndex
-from angelica.storage.sqlite.store_sqlite import SQLiteStore
+from atlas.agents.agents import LabelerAgent, AdjudicatorAgent
+from atlas.models.config import AgenticConfig, LabelingContext, BuiltDocument, LabelingUnit
+from atlas.prompts.prompts import default_examples_formatter
+from atlas.storage.faiss.vector_faiss import FaissVectorIndex
+from atlas.storage.faiss.noop_index import NoOpVectorIndex
+from atlas.storage.sqlite.store_sqlite import SQLiteStore
 
 
 @dataclass

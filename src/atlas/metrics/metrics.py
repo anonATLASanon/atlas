@@ -2,7 +2,7 @@ import json
 from typing import Any, Iterable, Callable, Optional, List, Tuple
 from sklearn.metrics import cohen_kappa_score
 
-from angelica.storage.sqlite.store_sqlite import SQLiteStore
+from atlas.storage.sqlite.store_sqlite import SQLiteStore
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import pandas as pd

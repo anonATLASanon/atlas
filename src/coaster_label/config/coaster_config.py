@@ -9,8 +9,8 @@ from hamster.code_analysis.model.models import TestingFramework
 from hamster.extract_statistics.overall_characteristics.overall_characteristics import OverallCharacteristics
 from pydantic import BaseModel, Field, model_validator
 
-from angelica.models.config import AgenticConfig, PromptSpec, StoreSpec, LabelingContext
-from angelica.models.config import BuiltDocument, LabelingUnit
+from atlas.models.config import AgenticConfig, PromptSpec, StoreSpec, LabelingContext
+from atlas.models.config import BuiltDocument, LabelingUnit
 from coaster_label.config.prompt_builder import PromptBuilder
 
 

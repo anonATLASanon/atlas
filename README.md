@@ -55,7 +55,7 @@ Under `datasets/agent-prompts` are the prompts we used to generate tests for app
 With the virtual environment activated, using the following command to run Atlas on a web API application.
 
 ```bash
-angelica label-units \
+atlas label-units \
   --config ./src/coaster_label/config/coaster_config.py \
   --project-path "root directory of the application, e.g., datasets/validation/catwatch" \
   --analysis-provider ./src/coaster_label/config/cldk_analysis_provider.py \
@@ -68,10 +68,10 @@ angelica label-units \
 
 For example, to run Atlas on `catwatch`:
 ```bash
-angelica label-units --config ./src/coaster_label/config/coaster_config.py --project-path datasets/validation/catwatch --analysis-provider ./src/coaster_label/config/cldk_analysis_provider.py --db labels.db --index-dir vector_index --clear-cache --analysis-timeout 600 --out results/atlas_validation_runs/catwatch.json
+atlas label-units --config ./src/coaster_label/config/coaster_config.py --project-path datasets/validation/catwatch --analysis-provider ./src/coaster_label/config/cldk_analysis_provider.py --db labels.db --index-dir vector_index --clear-cache --analysis-timeout 600 --out results/atlas_validation_runs/catwatch.json
 ```
 
-Use `angelica label-units --help` to go through all the options.
+Use `atlas label-units --help` to go through all the options.
 
 ### Running on the validation dataset
 

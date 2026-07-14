@@ -36,7 +36,7 @@ from langchain_community.cache import SQLiteCache
 from langchain.callbacks.base import BaseCallbackHandler
 from pydantic import BaseModel
 
-from angelica.llm_client.token_counter import record_llm_call
+from atlas.llm_client.token_counter import record_llm_call
 
 
 class TokenTrackingSQLiteCache(SQLiteCache):
