@@ -6,7 +6,18 @@
 
 Requires Python 3.11 or higher.
 
+Note that Atlas imports `_sqlite3`, which is a Python stdlib extension module and might not be installed with your Python interpreter. To check if it is installed:
+```bash
+python -c "import sqlite3; print(sqlite3.sqlite_version)"
+```
 
+If missing, try the following commands to install `_sqlite3`.
+```bash
+sudo apt-get update
+sudo apt-get install -y sqlite3 libsqlite3-dev
+```
+
+To create the virtual environment for Atlas:
 ```bash
 python -m venv .venv
 source .venv/bin/activate
