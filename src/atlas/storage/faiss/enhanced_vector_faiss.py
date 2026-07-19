@@ -17,6 +17,7 @@ from langchain_community.vectorstores import FAISS
 from langchain_core.documents import Document
 
 from atlas.llm_client.llm import make_embeddings
+from atlas.utils.console import safe_print
 
 
 @dataclass
@@ -200,19 +201,19 @@ class EnhancedFaissVectorIndex:
                         pid: Pattern(**pdata) for pid, pdata in data.items()
                     }
             except json.JSONDecodeError as e:
-                print(f"Warning: Could not load patterns (corrupted JSON): {e}")
-                print(f"  Backing up corrupted file and starting fresh")
+                safe_print(f"Warning: Could not load patterns (corrupted JSON): {e}")
+                safe_print(f"  Backing up corrupted file and starting fresh")
                 # Backup corrupted file
                 backup_path = self.patterns_file + ".backup"
                 try:
                     import shutil
                     shutil.copy(self.patterns_file, backup_path)
-                    print(f"  Corrupted file backed up to: {backup_path}")
+                    safe_print(f"  Corrupted file backed up to: {backup_path}")
                 except Exception:
                     pass
                 self._patterns = {}
             except Exception as e:
-                print(f"Warning: Could not load patterns: {e}")
+                safe_print(f"Warning: Could not load patterns: {e}")
                 self._patterns = {}
         else:
             self._patterns = {}
@@ -334,7 +335,7 @@ class EnhancedFaissVectorIndex:
         similar_pattern = self._find_similar_pattern(pattern_name, description)
         if similar_pattern:
             # Update the existing pattern instead of creating a new one
-            print(f"  → Grouping with existing pattern: {similar_pattern.pattern_name}")
+            safe_print(f"  → Grouping with existing pattern: {similar_pattern.pattern_name}")
             updated = self.update_pattern(
                 similar_pattern.pattern_id,
                 initial_doc_id,
@@ -440,5 +441,4 @@ class EnhancedFaissVectorIndex:
                 for p in sorted(self._patterns.values(), key=lambda x: x.usage_count, reverse=True)
             ]
         }
-
 

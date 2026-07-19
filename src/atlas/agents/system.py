@@ -36,6 +36,7 @@ from atlas.prompts.prompts import default_examples_formatter
 from atlas.storage.faiss.vector_faiss import FaissVectorIndex
 from atlas.storage.faiss.noop_index import NoOpVectorIndex
 from atlas.storage.sqlite.store_sqlite import SQLiteStore
+from atlas.utils.console import safe_print
 
 
 @dataclass
@@ -142,20 +143,20 @@ class AgenticLabelingSystem:
         import hashlib
         content_hash = hashlib.md5(built.content.encode()).hexdigest()[:8]
         
-        print(f"\n📦 _label_built_document() called")
-        print(f"   Source: {source}")
-        print(f"   Content hash: [{content_hash}]")
-        print(f"   Content preview (first 200 chars): {built.content[:200]}...")
+        safe_print(f"\n📦 _label_built_document() called")
+        safe_print(f"   Source: {source}")
+        safe_print(f"   Content hash: [{content_hash}]")
+        safe_print(f"   Content preview (first 200 chars): {built.content[:200]}...")
         
         doc_id = self.store.add_document(built.content, source)
-        print(f"   Stored as doc_id: {doc_id}")
+        safe_print(f"   Stored as doc_id: {doc_id}")
 
         # Two independent labels (now returns label and prompt)
-        print(f"   Calling labeler_a with content_hash=[{content_hash}], doc_id={doc_id}")
+        safe_print(f"   Calling labeler_a with content_hash=[{content_hash}], doc_id={doc_id}")
         a, prompt_a = self.labeler_a.label(built.content, doc_id, self.config.examples_k)
         self.store.save_label(doc_id, self.labeler_a.agent_id, a)
 
-        print(f"   Calling labeler_b with content_hash=[{content_hash}], doc_id={doc_id}")
+        safe_print(f"   Calling labeler_b with content_hash=[{content_hash}], doc_id={doc_id}")
         b, prompt_b = self.labeler_b.label(built.content, doc_id, self.config.examples_k)
         self.store.save_label(doc_id, self.labeler_b.agent_id, b)
 

@@ -47,6 +47,7 @@ from atlas.storage.faiss.enhanced_vector_faiss import EnhancedFaissVectorIndex
 from atlas.storage.sqlite.store_sqlite import SQLiteStore
 from atlas.llm_client.llm import reset_llm_cache
 from atlas.llm_client.token_counter import get_token_counter
+from atlas.utils.console import safe_echo
 
 
 def iter_files(path: Path, suffix: str) -> Iterator[Path]:
@@ -257,13 +258,15 @@ def label_dir(
             }
 
     if out:
-        Path(out).write_text(json.dumps(results, indent=2), encoding="utf-8")
+        out_path = Path(out)
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        out_path.write_text(json.dumps(results, indent=2), encoding="utf-8")
     else:
-        typer.echo(json.dumps(results, indent=2))
+        safe_echo(json.dumps(results, indent=2))
 
     # Print token usage summary
     if parallel:
-        print("\n" + parallel_token_usage.format_summary())
+        safe_echo("\n" + parallel_token_usage.format_summary())
     else:
         get_token_counter().print_summary()
 
@@ -407,13 +410,15 @@ def label_units(
             }
 
     if out:
-        Path(out).write_text(json.dumps(results, indent=2), encoding="utf-8")
+        out_path = Path(out)
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        out_path.write_text(json.dumps(results, indent=2), encoding="utf-8")
     else:
-        typer.echo(json.dumps(results, indent=2))
+        safe_echo(json.dumps(results, indent=2))
 
     # Print token usage summary
     if parallel:
-        print("\n" + parallel_token_usage.format_summary())
+        safe_echo("\n" + parallel_token_usage.format_summary())
     else:
         get_token_counter().print_summary()
 
@@ -515,10 +520,10 @@ def extract_patterns(
     temp = ctx.obj["temp"]
     cfg = load_config_module(config)
     
-    typer.echo(f"🔍 Analyzing {field_name}={field_value}")
-    typer.echo(f"📊 Using reasoning from: {reasoning_field}")
-    typer.echo(f"📁 JSON directory: {json_dir}")
-    typer.echo(f"🎯 Max examples: {max_examples}\n")
+    safe_echo(f"🔍 Analyzing {field_name}={field_value}")
+    safe_echo(f"📊 Using reasoning from: {reasoning_field}")
+    safe_echo(f"📁 JSON directory: {json_dir}")
+    safe_echo(f"🎯 Max examples: {max_examples}\n")
     
     # Create pattern extractor
     extractor = PatternExtractor(
@@ -528,7 +533,7 @@ def extract_patterns(
     )
     
     # Extract patterns
-    typer.echo("🤖 Running pattern extraction with LLM...\n")
+    safe_echo("🤖 Running pattern extraction with LLM...\n")
     result = extractor.extract_patterns_from_directory(
         json_dir=json_dir,
         field_name=field_name,
@@ -540,46 +545,46 @@ def extract_patterns(
     )
     
     # Display results
-    typer.echo("=" * 80)
-    typer.echo("PATTERN EXTRACTION RESULTS")
-    typer.echo("=" * 80)
-    typer.echo(f"\n📈 Total examples analyzed: {result.total_examples_analyzed}")
-    typer.echo(f"🆕 New patterns discovered: {len(result.new_patterns)}\n")
+    safe_echo("=" * 80)
+    safe_echo("PATTERN EXTRACTION RESULTS")
+    safe_echo("=" * 80)
+    safe_echo(f"\n📈 Total examples analyzed: {result.total_examples_analyzed}")
+    safe_echo(f"🆕 New patterns discovered: {len(result.new_patterns)}\n")
     
-    typer.echo("📝 Analysis Summary:")
-    typer.echo(result.analysis_summary)
-    typer.echo()
+    safe_echo("📝 Analysis Summary:")
+    safe_echo(result.analysis_summary)
+    safe_echo()
     
     if result.new_patterns:
-        typer.echo("=" * 80)
-        typer.echo("DISCOVERED PATTERNS")
-        typer.echo("=" * 80)
+        safe_echo("=" * 80)
+        safe_echo("DISCOVERED PATTERNS")
+        safe_echo("=" * 80)
         
         for i, pattern in enumerate(result.new_patterns, 1):
-            typer.echo(f"\n🔹 Pattern {i}: {pattern.pattern_name}")
-            typer.echo(f"   Category: {pattern.pattern_category}")
-            typer.echo(f"   Confidence: {pattern.confidence_score:.2f}")
-            typer.echo(f"   Examples: {pattern.example_count}")
-            typer.echo(f"\n   Description:")
-            typer.echo(f"   {pattern.pattern_description}")
-            typer.echo(f"\n   Distinguishing Features:")
+            safe_echo(f"\n🔹 Pattern {i}: {pattern.pattern_name}")
+            safe_echo(f"   Category: {pattern.pattern_category}")
+            safe_echo(f"   Confidence: {pattern.confidence_score:.2f}")
+            safe_echo(f"   Examples: {pattern.example_count}")
+            safe_echo(f"\n   Description:")
+            safe_echo(f"   {pattern.pattern_description}")
+            safe_echo(f"\n   Distinguishing Features:")
             for feature in pattern.distinguishing_features:
-                typer.echo(f"   • {feature}")
-            typer.echo(f"\n   Code Indicators:")
+                safe_echo(f"   • {feature}")
+            safe_echo(f"\n   Code Indicators:")
             for indicator in pattern.code_indicators:
-                typer.echo(f"   • {indicator}")
+                safe_echo(f"   • {indicator}")
             
             # Display example references if available
             if pattern.example_references:
-                typer.echo(f"\n   📋 Example References (for verification):")
+                safe_echo(f"\n   📋 Example References (for verification):")
                 for j, ref in enumerate(pattern.example_references[:10], 1):  # Show first 10
-                    typer.echo(f"   {j}. File: {ref.file_path}")
-                    typer.echo(f"      Doc ID: {ref.doc_id} | Project: {ref.project}")
+                    safe_echo(f"   {j}. File: {ref.file_path}")
+                    safe_echo(f"      Doc ID: {ref.doc_id} | Project: {ref.project}")
                 if len(pattern.example_references) > 10:
-                    typer.echo(f"   ... and {len(pattern.example_references) - 10} more examples")
-            typer.echo()
+                    safe_echo(f"   ... and {len(pattern.example_references) - 10} more examples")
+            safe_echo()
     else:
-        typer.echo("ℹ️  No new patterns discovered with sufficient confidence.")
+        safe_echo("ℹ️  No new patterns discovered with sufficient confidence.")
     
     # Save to file if requested
     if out:
@@ -591,11 +596,13 @@ def extract_patterns(
             "analysis_summary": result.analysis_summary,
             "new_patterns": [p.model_dump() for p in result.new_patterns],
         }
-        Path(out).write_text(json.dumps(output_data, indent=2), encoding="utf-8")
-        typer.echo(f"\n💾 Results saved to: {out}")
+        out_path = Path(out)
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        out_path.write_text(json.dumps(output_data, indent=2), encoding="utf-8")
+        safe_echo(f"\n💾 Results saved to: {out}")
     
     # Print token usage summary
-    typer.echo()
+    safe_echo()
     get_token_counter().print_summary()
 
 

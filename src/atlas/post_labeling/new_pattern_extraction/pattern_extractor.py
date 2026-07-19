@@ -20,6 +20,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
 
 from atlas.llm_client.llm import make_structured_llm
+from atlas.utils.console import safe_print
 
 
 class ExampleReference(BaseModel):
@@ -310,13 +311,13 @@ class PatternExtractor:
         use_parallel = use_ray and RAY_AVAILABLE
         
         if use_parallel:
-            print("🚀 Using Ray for parallel chunk processing...")
+            safe_print("🚀 Using Ray for parallel chunk processing...")
             return self._extract_patterns_parallel(
                 examples, field_name, reasoning_field, chunk_size
             )
         else:
             if use_ray and not RAY_AVAILABLE:
-                print("⚠️  Ray not available, falling back to sequential processing...")
+                safe_print("⚠️  Ray not available, falling back to sequential processing...")
             return self._extract_patterns_sequential(
                 examples, field_name, reasoning_field, chunk_size
             )
@@ -340,7 +341,7 @@ class PatternExtractor:
             chunks.append((chunk, chunk_idx))
         
         total_chunks = len(chunks)
-        print(f"Processing {total_chunks} chunks in parallel...")
+        safe_print(f"Processing {total_chunks} chunks in parallel...")
         
         # Submit all chunks to Ray
         futures = []
@@ -363,7 +364,7 @@ class PatternExtractor:
         for i, future in enumerate(futures):
             result_dict = ray.get(future)
             chunk_num = i + 1
-            print(f"✓ Completed chunk {chunk_num}/{total_chunks}")
+            safe_print(f"✓ Completed chunk {chunk_num}/{total_chunks}")
             
             # Convert dict back to NewPattern objects
             chunk_idx = result_dict["chunk_idx"]
@@ -394,7 +395,7 @@ class PatternExtractor:
         # Merge similar patterns across chunks
         merged_patterns = self._merge_similar_patterns(all_patterns, examples)
         
-        print(f"\n🔄 Consolidating {len(merged_patterns)} patterns with LLM...")
+        safe_print(f"\n🔄 Consolidating {len(merged_patterns)} patterns with LLM...")
         
         # Consolidate patterns using LLM
         consolidated_patterns = self._consolidate_patterns_with_llm(
@@ -432,7 +433,7 @@ class PatternExtractor:
             chunk_num = chunk_idx // chunk_size + 1
             total_chunks = (len(examples) + chunk_size - 1) // chunk_size
             
-            print(f"Processing chunk {chunk_num}/{total_chunks} ({len(chunk)} examples)...")
+            safe_print(f"Processing chunk {chunk_num}/{total_chunks} ({len(chunk)} examples)...")
             
             # Format examples for the prompt
             examples_text = self._format_examples(chunk, reasoning_field)
@@ -475,7 +476,7 @@ class PatternExtractor:
         # Merge similar patterns across chunks
         merged_patterns = self._merge_similar_patterns(all_patterns, examples)
         
-        print(f"\n🔄 Consolidating {len(merged_patterns)} patterns with LLM...")
+        safe_print(f"\n🔄 Consolidating {len(merged_patterns)} patterns with LLM...")
         
         # Consolidate patterns using LLM
         consolidated_patterns = self._consolidate_patterns_with_llm(
@@ -513,7 +514,7 @@ class PatternExtractor:
         
         # If we have very few patterns, skip consolidation
         if len(patterns) <= 3:
-            print(f"Only {len(patterns)} patterns found, skipping consolidation.")
+            safe_print(f"Only {len(patterns)} patterns found, skipping consolidation.")
             return patterns
         
         # Format patterns for the LLM
@@ -564,7 +565,7 @@ class PatternExtractor:
             
             consolidated.append(cons_pattern)
         
-        print(f"✓ Consolidated from {len(patterns)} to {len(consolidated)} patterns")
+        safe_print(f"✓ Consolidated from {len(patterns)} to {len(consolidated)} patterns")
         
         return consolidated
     
@@ -781,10 +782,10 @@ class PatternExtractor:
                                 return examples
                 
             except json.JSONDecodeError as e:
-                print(f"Warning: Could not parse JSON file {json_file}: {e}")
+                safe_print(f"Warning: Could not parse JSON file {json_file}: {e}")
                 continue
             except Exception as e:
-                print(f"Warning: Error processing {json_file}: {e}")
+                safe_print(f"Warning: Error processing {json_file}: {e}")
                 continue
         
         return examples
@@ -813,5 +814,4 @@ class PatternExtractor:
             )
         
         return "\n".join(formatted)
-
 

@@ -27,6 +27,7 @@ from atlas.models.config import AgenticConfig, LabelingContext, LabelingUnit, Bu
 from atlas.parallel.rate_limiter import RateLimiter
 from atlas.parallel.ray_storage import RayStorageActor
 from atlas.parallel.ray_worker import RayLabelingWorker
+from atlas.utils.console import safe_print
 
 logger = logging.getLogger(__name__)
 
@@ -239,7 +240,7 @@ class RayLabelingOrchestrator:
                         
                         # Handle results with errors - still add to results_dict
                         if isinstance(result, dict) and result.get("error"):
-                            print(f"⚠️  Error in result {idx}: {result['error']}")
+                            safe_print(f"⚠️  Error in result {idx}: {result['error']}")
                             # Create a placeholder result for the error
                             error_result = ParallelLabelingResult(
                                 doc_id=result.get("doc_id", -1),
@@ -271,7 +272,7 @@ class RayLabelingOrchestrator:
 
                     # Handle results with errors - still add to results_dict
                     if isinstance(result, dict) and result.get("error"):
-                        print(f"⚠️  Error in result {idx}: {result.get('error')}")
+                        safe_print(f"⚠️  Error in result {idx}: {result.get('error')}")
                         # Create a placeholder result for the error
                         error_result = ParallelLabelingResult(
                             doc_id=result.get("doc_id", -1),
@@ -428,5 +429,4 @@ class RayLabelingOrchestrator:
         if self._ray_initialized and ray.is_initialized():
             ray.shutdown()
             self._ray_initialized = False
-
 

@@ -37,6 +37,7 @@ from langchain.callbacks.base import BaseCallbackHandler
 from pydantic import BaseModel
 
 from atlas.llm_client.token_counter import record_llm_call
+from atlas.utils.console import safe_print
 
 
 class TokenTrackingSQLiteCache(SQLiteCache):
@@ -69,9 +70,9 @@ def _setup_cache() -> None:
     
     try:
         set_llm_cache(TokenTrackingSQLiteCache(database_path=cache_path))
-        print(f"✓ LLM caching enabled: {cache_path}")
+        safe_print(f"✓ LLM caching enabled: {cache_path}")
     except Exception as e:
-        print(f"Warning: Could not enable LLM cache: {e}")
+        safe_print(f"Warning: Could not enable LLM cache: {e}")
 
 
 def reset_llm_cache(clear_existing: bool = False) -> None:
@@ -81,7 +82,7 @@ def reset_llm_cache(clear_existing: bool = False) -> None:
     cache_dir = _env("LLM_CACHE_DIR", ".llm_cache") or ".llm_cache"
     if clear_existing and os.path.exists(cache_dir):
         shutil.rmtree(cache_dir)
-        print(f"Removed LLM cache: {cache_dir}")
+        safe_print(f"Removed LLM cache: {cache_dir}")
 
     _setup_cache()
 
