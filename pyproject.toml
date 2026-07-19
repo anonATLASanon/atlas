@@ -3,7 +3,7 @@ name = "atlas"
 version = "0.0.1"
 description = "Agentic Labeling"
 authors = []
-requires-python = "==3.11.10"
+requires-python = ">=3.11,<3.12"
 readme = "README.md"
 dependencies = [
     "aiohappyeyeballs==2.6.1",
