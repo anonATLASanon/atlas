@@ -84,6 +84,10 @@ atlas label-units --config ./src/coaster_label/config/coaster_config.py --projec
 
 Use `atlas label-units --help` to go through all the options.
 
+By default, Atlas does not persist CLDK/codeanalyzer analysis JSONs. To save and reuse
+them across runs, add `--cache-analysis`; use `--analysis-cache-dir <dir>` to choose
+where the cached analysis JSONs are stored.
+
 ### Running on the validation dataset
 
 The following command will run Atlas on each application in the validation dataset (`datasets/validation`), and the outputs will be saved at `results/atlas_validation_runs/<app_name>.json`.

@@ -31,6 +31,7 @@ Your config's unit_enumerator/unit_resolver can then use ctx.analysis.
 """
 
 import importlib.util
+import inspect
 import json
 from pathlib import Path
 from typing import Any, Callable, Iterator, Optional
@@ -78,12 +79,12 @@ def load_config_module(path: str):
     return mod.CONFIG
 
 
-def load_analysis_provider(path: str) -> Callable[[str], Any]:
+def load_analysis_provider(path: str) -> Callable[..., Any]:
     """Load an analysis provider from a python file.
 
     The provider module must define either:
-      - build_analysis(project_path: str) -> Any
-      - ANALYSIS_PROVIDER: Callable[[str], Any
+      - build_analysis(project_path: str, **kwargs) -> Any
+      - ANALYSIS_PROVIDER: Callable[..., Any]
     """
     mod = _load_module(path, "analysis_provider_module")
     if hasattr(mod, "build_analysis") and callable(mod.build_analysis):
@@ -93,6 +94,41 @@ def load_analysis_provider(path: str) -> Callable[[str], Any]:
     raise RuntimeError(
         "Analysis provider must define build_analysis(project_path) or ANALYSIS_PROVIDER callable."
     )
+
+
+def build_analysis_with_options(
+    provider: Callable[..., Any],
+    project_path: str,
+    *,
+    cache_analysis: bool,
+    analysis_cache_dir: Optional[str],
+) -> Any:
+    """Call an analysis provider with supported Atlas analysis options."""
+    kwargs = {
+        "cache_analysis": cache_analysis,
+        "analysis_cache_dir": analysis_cache_dir,
+    }
+    signature = inspect.signature(provider)
+    accepts_kwargs = any(
+        param.kind is inspect.Parameter.VAR_KEYWORD
+        for param in signature.parameters.values()
+    )
+    accepted_kwargs = (
+        kwargs
+        if accepts_kwargs
+        else {name: value for name, value in kwargs.items() if name in signature.parameters}
+    )
+
+    if cache_analysis and "cache_analysis" not in accepted_kwargs:
+        raise RuntimeError(
+            "The selected analysis provider does not support --cache-analysis."
+        )
+    if analysis_cache_dir and "analysis_cache_dir" not in accepted_kwargs:
+        raise RuntimeError(
+            "The selected analysis provider does not support --analysis-cache-dir."
+        )
+
+    return provider(project_path, **accepted_kwargs)
 
 
 def clear_run_caches(db: str, index_dir: str, *, clear_llm_cache: bool = False) -> None:
@@ -291,6 +327,16 @@ def label_units(
         "--analysis-timeout",
         help="Seconds before timing out analysis construction. Use 0 for no timeout.",
     ),
+    cache_analysis: bool = typer.Option(
+        False,
+        "--cache-analysis",
+        help="Persist and reuse analysis JSONs when the analysis provider supports it.",
+    ),
+    analysis_cache_dir: Optional[str] = typer.Option(
+        None,
+        "--analysis-cache-dir",
+        help="Directory for persisted analysis JSONs. Used only with --cache-analysis.",
+    ),
     out: Optional[str] = typer.Option(None, "--out", help="Optional output JSON path"),
     fresh_build: bool = typer.Option(False, "--fresh-build", help="If set, then vector index and database will be rebuilt"),
     enhanced: bool = typer.Option(False, "--enhanced", help="Use enhanced system with pattern learning"),
@@ -308,6 +354,9 @@ def label_units(
     temp = ctx.obj["temp"]
     cfg = load_config_module(config)
 
+    if analysis_cache_dir and not cache_analysis:
+        raise typer.BadParameter("--analysis-cache-dir requires --cache-analysis")
+
     if cfg.unit_enumerator is None:
         raise typer.BadParameter("CONFIG.unit_enumerator is not set.")
     if cfg.unit_resolver is None:
@@ -322,7 +371,12 @@ def label_units(
             raise typer.BadParameter("--project-path is required when using --analysis-provider")
         try:
             with analysis_timeout(analysis_timeout_seconds):
-                ctx_obj.analysis = provider(project_path)
+                ctx_obj.analysis = build_analysis_with_options(
+                    provider,
+                    project_path,
+                    cache_analysis=cache_analysis,
+                    analysis_cache_dir=analysis_cache_dir,
+                )
         except TimeoutError as exc:
             raise typer.ClickException(str(exc)) from exc
 
